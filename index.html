@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroFit | Smart Pose Detection</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <nav class="sidebar">
+            <div class="logo">
+                <i class="fas fa-brain"></i>
+                <span>NeuroFit</span>
+            </div>
+            <ul class="menu">
+                <li class="active"><i class="fas fa-video"></i> Live Detection</li>
+            </ul>
+            <div class="user-profile">
+                <div class="avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="user-info">
+                    <span class="username">User</span>
+                    <span class="status">
+                        <i class="fas fa-circle"></i> Connected
+                    </span>
+                </div>
+            </div>
+        </nav>
+
+        <main class="content">
+            <header>
+                <h1>Live Yoga Detection</h1>
+                <div class="session-controls">
+                    <button id="start-session-btn" class="btn primary">
+                        <i class="fas fa-play"></i> Start Session
+                    </button>
+                    <button id="stop-session-btn" class="btn secondary" disabled>
+                        <i class="fas fa-stop"></i> End Session
+                    </button>
+                </div>
+            </header>
+
+            <div class="detection-container">
+                <div class="webcam-container">
+                    <video id="webcam" autoplay></video>
+                    <canvas id="canvas"></canvas>
+                    <div class="camera-overlay" id="camera-overlay">
+                        <i class="fas fa-camera-rotate"></i>
+                        <p>Click Start Session to begin</p>
+                    </div>
+                    <div class="loading-overlay" id="loading-overlay">
+                        <div class="spinner"></div>
+                        <p>Loading pose detection model...</p>
+                    </div>
+                </div>
+
+                <div class="info-panel">
+                    <div class="pose-card">
+                        <h2>Current Pose</h2>
+                        <div class="pose-name" id="pose-name">No pose detected</div>
+                        <div class="confidence-meter">
+                            <div class="confidence-bar">
+                                <div class="confidence-fill" id="confidence-fill" style="width: 0%"></div>
+                            </div>
+                            <div class="confidence-text" id="confidence-text">0%</div>
+                        </div>
+                    </div>
+
+                    <div class="session-stats">
+                        <h2>Session Stats</h2>
+                        <div class="stat-grid">
+                            <div class="stat-card">
+                                <i class="fas fa-clock"></i>
+                                <div class="stat-value" id="session-time">00:00</div>
+                                <div class="stat-label">Session Time</div>
+                            </div>
+                            <div class="stat-card">
+                                <i class="fas fa-fire"></i>
+                                <div class="stat-value" id="pose-count">0</div>
+                                <div class="stat-label">Poses Detected</div>
+                            </div>
+                            <div class="stat-card">
+                                <i class="fas fa-medal"></i>
+                                <div class="stat-value" id="best-pose">-</div>
+                                <div class="stat-label">Best Pose</div>
+                            </div>
+                            <div class="stat-card">
+                                <i class="fas fa-brain"></i>
+                                <div class="stat-value" id="avg-confidence">0%</div>
+                                <div class="stat-label">Avg. Confidence</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pose-history">
+                        <h2>Recent Poses</h2>
+                        <ul id="pose-history-list">
+                            <li class="empty-history">No poses detected yet</li>
+                        </ul>
+                    </div>
+
+                    <button id="save-session-btn" class="btn primary full-width" disabled>
+                        <i class="fas fa-cloud-upload-alt"></i> Save Session to Cloud
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Firebase integration -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+
+    <!-- MediaPipe libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose/pose.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+    
+    <!-- App scripts -->
+    <script src="firebase-config.js"></script>
+    <script src="pose-detection.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
